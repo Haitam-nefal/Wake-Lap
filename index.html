@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../main.css" rel="stylesheet">
+    <!-- FONT-AWESOME CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+        integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>Activites</title>
+</head>
+
+<body>
+
+    <header class="bg-gray-400 fixed w-full z-99 shadow-lg">
+        <nav class="flex flex-col md:flex-row justify-between items-center  max-w-6xl mx-auto min-h-20 py-2">
+            <div class="logo">Logo</div>
+            <ul class="flex items-center space-x-6">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <main class="pt-25 max-w-6xl mx-auto">
+
+        <!-- FORMULAIRE POUR LE NOM COMPLET : -->
+        <div id="popup-nom-complet" class="bg-gray-400 py-4 px-6 rounded-2xl mx-2 md:mx-0">
+            <div>
+                <label for="nom">Nom Complet</label>
+                <input type="text" placeholder="Entrer Votre nom Complet..." name="nom" id="nom"
+                    class="w-full border border-black py-1 px-3 rounded-md mt-2">
+                <span id="error-nom" class="text-red-700 font-semibold text-[14px]"></span>
+            </div>
+            <button id="send-nom"
+                class="bg-red-700 mt-5 py-1 px-4 cursor-pointer rounded-md text-white font-semibold">Send</button>
+        </div>
+
+
+        <section class="min-h-screen">
+            <header class="">
+                <h1 class="text-[30px] font-semibold">Lorem ipsum dolor sit amet.</h1>
+                <p class="text-[18px] my-4">Lorem ipsum dolor, sit
+                    amet consectetur adipisicing elit. Culpa, earum minus.
+                    Labore eveniet
+                    placeat cumque quidem corporis alias veniam voluptatibus.</p>
+                <button id="creat-activite" class="bg-red-500 text-white cursor-pointer rounded-md py-1 px-4">Creer une
+                    activite</button>
+            </header>
+
+            <!-- RECHERCHE & FILTRAGE -->
+            <div class="mt-5 grid grid-cols-5 gap-5">
+                <div class="flex items-center w-full border-4 border-black rounded-3xl col-span-4">
+                    <input type="text" id="" name="" placeholder="chercher par Titre"
+                        class="w-full outline-none px-3 py-1">
+                    <i class="fa-solid fa-magnifying-glass text-[25px] me-3"></i>
+                </div>
+                <select name="" id="" col-span-1>
+                    <option value="" selected disabled>--choisir--</option>
+                    <option value="hehehheheh">hehehheheh</option>
+                    <option value="hehehheheh">hehehheheh</option>
+                </select>
+            </div>
+
+            <div id="container-activites" class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-5 gap-5">
+                <!-- <article class="bg-red-300 rounded-2xl py-2 px-4">
+                    <h3>Lorem, ipsum dolor.</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+                    <p>Objectife : Lorem ipsum dolor sit amet.</p>
+                    <p>Auteur : Sara El Amrani</p>
+                    <span>Duree : 10 min</span>
+                    <span>Theme : apprentissage</span>
+                </article>
+
+                <article class="bg-red-300 rounded-2xl py-2 px-4">
+                    <h3>Lorem, ipsum dolor.</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+                    <p>Objectife : Lorem ipsum dolor sit amet.</p>
+                    <p>Auteur : Sara El Amrani</p>
+                    <span>Duree : 10 min</span>
+                    <span>Theme : apprentissage</span>
+                </article>
+                <article class="bg-red-300 rounded-2xl py-2 px-4">
+                    <h3>Lorem, ipsum dolor.</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+                    <p>Objectife : Lorem ipsum dolor sit amet.</p>
+                    <p>Auteur : Sara El Amrani</p>
+                    <span>Duree : 10 min</span>
+                    <span>Theme : apprentissage</span>
+                </article> -->
+            </div>
+
+
+        </section>
+    </main>
+
+    <script type="module" src="./src/js/index.js"></script>
+    <script src="
+https://cdn.jsdelivr.net/npm/axios@1.21.1/dist/axios.min.js
+"></script>
+
+</body>
+
+</html>
