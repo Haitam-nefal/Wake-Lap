@@ -42,27 +42,72 @@
 
 
         <section class="min-h-screen">
+
+            <!-- POPUP POUR LA CREATION DE L'ACTIVITE -->
+            <div id="form-create-participant"
+                class="bg-gray-500 absolute left-[50%] top-[50%] translate-[-50%] py-5 px-7 shadow-lg rounded-md hidden">
+                <form action="">
+                    <i class="fa-solid fa-xmark" id="close-popup"></i>
+                    <div>
+                        <label for="titre">Titre</label>
+                        <input type="text" name="titre" id="titre" placeholder=""
+                            class="w-full border border-black rounded-lg outline-0 px-2 text-white">
+                    </div>
+                    <div>
+                        <label for="theme">Theme</label>
+                        <select name="" id="theme" col-span-1
+                            class="w-full border border-black rounded-lg outline-0 px-2">
+                            <option value="" selected disabled>--choisir--</option>
+                            <option value="apprentissage">apprentissage</option>
+                            <option value="jeu">jeu</option>
+                            <option value="exercice">exercice</option>
+                            <option value="autre">autre</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="objectif">Objectif</label>
+                        <input type="text" id="objectif" placeholder="" name=""
+                            class="w-full border border-black rounded-lg outline-0 px-2 text-white">
+                    </div>
+                    <div>
+                        <label for="duree">Duree</label>
+                        <input type="text" id="duree" placeholder="" name="duree"
+                            class="w-full border border-black rounded-lg outline-0 px-2 text-white">
+                    </div>
+                    <div>
+                        <label for="description">Description</label>
+                        <input type="text" name="description" id="description" placeholder="description"
+                            class="w-full border border-black rounded-lg outline-0 px-2 text-white">
+                    </div>
+                    <button class="bg-red-700 text-white cursor-pointer py-1 px-3 rounded-lg mt-4 w-full"
+                        id="btn-create-activite">Creer Activite</button>
+                </form>
+            </div>
+
+
             <header class="">
                 <h1 class="text-[30px] font-semibold">Lorem ipsum dolor sit amet.</h1>
                 <p class="text-[18px] my-4">Lorem ipsum dolor, sit
                     amet consectetur adipisicing elit. Culpa, earum minus.
                     Labore eveniet
                     placeat cumque quidem corporis alias veniam voluptatibus.</p>
-                <button id="creat-activite" class="bg-red-500 text-white cursor-pointer rounded-md py-1 px-4">Creer une
+                <button id="open-popup" class="bg-red-500 text-white cursor-pointer rounded-md py-1 px-4">Creer une
                     activite</button>
             </header>
 
             <!-- RECHERCHE & FILTRAGE -->
             <div class="mt-5 grid grid-cols-5 gap-5">
                 <div class="flex items-center w-full border-4 border-black rounded-3xl col-span-4">
-                    <input type="text" id="" name="" placeholder="chercher par Titre"
+                    <input type="text" id="search-input" name="" placeholder="chercher par Titre"
                         class="w-full outline-none px-3 py-1">
                     <i class="fa-solid fa-magnifying-glass text-[25px] me-3"></i>
                 </div>
-                <select name="" id="" col-span-1>
+                <select name="" id="filtrage-theme" col-span-1>
                     <option value="" selected disabled>--choisir--</option>
-                    <option value="hehehheheh">hehehheheh</option>
-                    <option value="hehehheheh">hehehheheh</option>
+                    <option value="apprentissage">apprentissage</option>
+                    <option value="jeu">jeu</option>
+                    <option value="exercice">exercice</option>
+                    <option value="autre">autre</option>
                 </select>
             </div>
 
