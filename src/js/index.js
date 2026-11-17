@@ -1,4 +1,9 @@
-import { getActivites, filterActiviteParTheme } from "./main.js";
+import {
+  getActivites,
+  filterActiviteParTheme,
+  createActivite,
+  deleteActivite,
+} from "./main.js";
 
 // =====================================
 let activites = [];
@@ -19,6 +24,7 @@ const closePopup = document.getElementById("close-popup");
 
 const passDataToVariable = async () => {
   activites = await getActivites();
+  console.log(activites);
   AffichageActivites(activites);
   checkName();
 };
@@ -38,13 +44,14 @@ const AffichageActivites = (acts) => {
                 <span class="bg-amber-200 p-1 rounded-lg">Duree : ${ac.duree} min</span>
                 <span class="bg-amber-200 p-1 rounded-lg">Theme : ${ac.theme}</span>
             </div>
-            <div id=".btns" class="mt-3">
-                <button class="bg-red-600 cursor-pointer mt-3 py-1 px-4 rounded-md text-white">supprime</button>
-                <button class="bg-green-500 cursor-pointer mt-3 py-1 px-4 rounded-md text-white">Modifier</button>
+            <div id="btns" class="mt-3" data-id="${ac.id}">
+                <button data-desc="btn-delete" class="bg-red-600 cursor-pointer mt-3 py-1 px-4 rounded-md text-white">supprime</button>
+                <button data-desc="btn-modifier" class="bg-green-500 cursor-pointer mt-3 py-1 px-4 rounded-md text-white">Modifier</button>
             </div>
         </article>
     `;
   });
+  AddListenerToBtns();
 };
 
 // CHECK THE NAME
@@ -84,7 +91,6 @@ const validationInput = () => {
 };
 
 //// : Filtrage & Searche :
-
 //// SEARCH INPUT =>
 searchInput.addEventListener("input", (e) => {
   const filtredActivites = activites.filter((act) =>
@@ -92,7 +98,6 @@ searchInput.addEventListener("input", (e) => {
   );
   AffichageActivites(filtredActivites);
 });
-
 //// FILTARGE PAR THEME =>
 filtrageTheme.addEventListener("change", async (e) => {
   console.log(e.target.value);
@@ -104,9 +109,55 @@ filtrageTheme.addEventListener("change", async (e) => {
 openPopup.addEventListener("click", () => {
   formCreateParticipant.classList.remove("hidden");
 });
-// CLOSE POPUP =>
-closePopup.addEventListener("click", () => {
+// Event To CLOSE POPUP =>
+closePopup.addEventListener("click", () => FnClosePopup());
+
+// FUNCTION TO CLOSE POPUP =>
+const FnClosePopup = () => {
   formCreateParticipant.classList.add("hidden");
+};
+
+// CREATE ACTIVITE :
+btnCreateActivite.addEventListener("click", async (e) => {
+  e.preventDefault();
+  try {
+    const forms = document.forms["create-participant"];
+    const { titre, objectif, duree, description, theme } = forms;
+    await createActivite({
+      titre: titre.value,
+      objectif: objectif.value,
+      duree: parseInt(duree.value),
+      description: description.value,
+      theme: theme.value,
+      auteur: localStorage.getItem("nom"),
+    });
+    forms.reset();
+    FnClosePopup();
+  } catch (err) {
+    console.log("err from btn create  : ", err);
+  } finally {
+    passDataToVariable();
+  }
 });
+
+// ADD LISTENER TO BUTTONS =>
+const AddListenerToBtns = () => {
+  document.querySelectorAll("#btns").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      if (e.target.dataset.desc === "btn-delete") {
+        console.log(`delete ${e.currentTarget.dataset.id}`);
+        if (confirm("are you sure ?")) {
+          await deleteActivite(e.currentTarget.dataset.id);
+          passDataToVariable();
+        }
+        return;
+      }
+      if (e.target.dataset.desc === "btn-modifier") {
+        console.log(`modifier ${e.currentTarget.dataset.id}`);
+        return;
+      }
+    });
+  });
+};
 
 passDataToVariable();

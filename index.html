@@ -46,7 +46,7 @@
             <!-- POPUP POUR LA CREATION DE L'ACTIVITE -->
             <div id="form-create-participant"
                 class="bg-gray-500 absolute left-[50%] top-[50%] translate-[-50%] py-5 px-7 shadow-lg rounded-md hidden">
-                <form action="">
+                <form name="create-participant">
                     <i class="fa-solid fa-xmark" id="close-popup"></i>
                     <div>
                         <label for="titre">Titre</label>
@@ -55,7 +55,7 @@
                     </div>
                     <div>
                         <label for="theme">Theme</label>
-                        <select name="" id="theme" col-span-1
+                        <select name="theme" id="theme" col-span-1
                             class="w-full border border-black rounded-lg outline-0 px-2">
                             <option value="" selected disabled>--choisir--</option>
                             <option value="apprentissage">apprentissage</option>
@@ -66,7 +66,7 @@
                     </div>
                     <div>
                         <label for="objectif">Objectif</label>
-                        <input type="text" id="objectif" placeholder="" name=""
+                        <input type="text" id="objectif" placeholder="" name="objectif"
                             class="w-full border border-black rounded-lg outline-0 px-2 text-white">
                     </div>
                     <div>
@@ -76,8 +76,8 @@
                     </div>
                     <div>
                         <label for="description">Description</label>
-                        <input type="text" name="description" id="description" placeholder="description"
-                            class="w-full border border-black rounded-lg outline-0 px-2 text-white">
+                        <textarea name="description" id="description"
+                            class="w-full border border-black rounded-lg outline-0 px-2 text-white"></textarea>
                     </div>
                     <button class="bg-red-700 text-white cursor-pointer py-1 px-3 rounded-lg mt-4 w-full"
                         id="btn-create-activite">Creer Activite</button>
