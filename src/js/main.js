@@ -23,7 +23,14 @@ export const createActivite = async (data) => {
 };
 
 export const deleteActivite = async (id) => {
-  console.log(id);
   await api.delete(`${URI}/${id}`);
-  // console.log(res);
+};
+
+export const updateActivite = async (id, data) => {
+  try {
+    return await api.put(`${URI}/${id}`, data);
+  } catch (err) {
+    console.log(err);
+    console.log(err.response);
+  }
 };

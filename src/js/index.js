@@ -3,6 +3,7 @@ import {
   filterActiviteParTheme,
   createActivite,
   deleteActivite,
+  updateActivite,
 } from "./main.js";
 
 // =====================================
@@ -16,11 +17,12 @@ const containerActivites = document.getElementById("container-activites");
 const searchInput = document.getElementById("search-input");
 const filtrageTheme = document.getElementById("filtrage-theme");
 const btnCreateActivite = document.getElementById("btn-create-activite");
-const formCreateParticipant = document.getElementById(
-  "form-create-participant",
-);
+const formCreateActivite = document.getElementById("form-create-activite");
+const formUpdateActivite = document.getElementById("form-update-activite");
 const openPopup = document.getElementById("open-popup");
 const closePopup = document.getElementById("close-popup");
+const btnUpdateActivite = document.getElementById("btn-update-activite");
+const cancelUpdate = document.getElementById("cancel-update");
 
 const passDataToVariable = async () => {
   activites = await getActivites();
@@ -107,14 +109,17 @@ filtrageTheme.addEventListener("change", async (e) => {
 
 // OPEN POPUP =>
 openPopup.addEventListener("click", () => {
-  formCreateParticipant.classList.remove("hidden");
+  formCreateActivite.classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  document.body.classList = "overflow-y-hidden";
 });
-// Event To CLOSE POPUP =>
+// EVENET To CLOSE POPUP =>
 closePopup.addEventListener("click", () => FnClosePopup());
 
 // FUNCTION TO CLOSE POPUP =>
 const FnClosePopup = () => {
-  formCreateParticipant.classList.add("hidden");
+  formCreateActivite.classList.add("hidden");
+  document.body.classList = "overflow-y-auto";
 };
 
 // CREATE ACTIVITE :
@@ -122,10 +127,10 @@ btnCreateActivite.addEventListener("click", async (e) => {
   e.preventDefault();
   try {
     const forms = document.forms["create-participant"];
-    const { titre, objectif, duree, description, theme } = forms;
+    const { titre, objectifs, duree, description, theme } = forms;
     await createActivite({
       titre: titre.value,
-      objectif: objectif.value,
+      objectifs: objectifs.value,
       duree: parseInt(duree.value),
       description: description.value,
       theme: theme.value,
@@ -153,7 +158,17 @@ const AddListenerToBtns = () => {
         return;
       }
       if (e.target.dataset.desc === "btn-modifier") {
-        console.log(`modifier ${e.currentTarget.dataset.id}`);
+        formUpdateActivite.classList.remove("hidden");
+        formUpdateActivite.setAttribute(
+          "data-activite-id",
+          e.currentTarget.dataset.id,
+        );
+        document.body.classList.add("overflow-y-hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        const activiteModifier = activites.find(
+          (act) => act.id == e.currentTarget.dataset.id,
+        );
+        RemplireFormulaire(activiteModifier);
         return;
       }
     });
@@ -161,3 +176,49 @@ const AddListenerToBtns = () => {
 };
 
 passDataToVariable();
+
+const RemplireFormulaire = (activite) => {
+  const { activiteId, titre, theme, objectifs, duree, description } =
+    document.forms["update-participant"];
+  activiteId.value = activite.id;
+  titre.value = activite.titre;
+  theme.value = activite.theme;
+  objectifs.value = activite.objectifs;
+  duree.value = activite.duree;
+  description.value = activite.description;
+};
+
+btnUpdateActivite.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  const { activiteId, titre, theme, objectifs, duree, description } =
+    document.forms["update-participant"];
+  console.log(activiteId);
+
+  const resulta = await updateActivite(activiteId.value, {
+    titre: titre.value,
+    theme: theme.value,
+    objectifs: objectifs.value,
+    duree: parseInt(duree.value),
+    description: description.value,
+  });
+  if (resulta.status === 200) {
+    formUpdateActivite.classList.add("hidden");
+    document.body.classList = "overflow-y-auto";
+    return;
+  }
+});
+
+// CLOSE UPDATE FORMULAIRE =>
+cancelUpdate.addEventListener("click", (e) => {
+  e.preventDefault();
+  formUpdateActivite.classList.add("hidden");
+  document.body.classList = "overflow-y-auto";
+});
+
+const titleId = document.getElementById("title");
+const titleQuerySelector = document.querySelector("#title");
+
+console.log("get title with getElementById : ", titleId);
+console.log("get title with querySelectore : ", titleQuerySelector);
+``

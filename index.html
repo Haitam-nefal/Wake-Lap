@@ -44,7 +44,7 @@
         <section class="min-h-screen">
 
             <!-- POPUP POUR LA CREATION DE L'ACTIVITE -->
-            <div id="form-create-participant"
+            <div id="form-create-activite"
                 class="bg-gray-500 absolute left-[50%] top-[50%] translate-[-50%] py-5 px-7 shadow-lg rounded-md hidden">
                 <form name="create-participant">
                     <i class="fa-solid fa-xmark" id="close-popup"></i>
@@ -65,8 +65,8 @@
                         </select>
                     </div>
                     <div>
-                        <label for="objectif">Objectif</label>
-                        <input type="text" id="objectif" placeholder="" name="objectif"
+                        <label for="objectif">Objectifs</label>
+                        <input type="text" id="objectifs" placeholder="" name="objectifs"
                             class="w-full border border-black rounded-lg outline-0 px-2 text-white">
                     </div>
                     <div>
@@ -84,6 +84,49 @@
                 </form>
             </div>
 
+            <!-- POPUP POUR LA MODIFICATION DE L'ACTIVITE -->
+            <div id="form-update-activite"
+                class="bg-gray-500 absolute left-[50%] top-[50%] translate-[-50%] py-5 px-7 shadow-lg rounded-md hidden">
+                <form name="update-participant">
+                    <!-- input id -->
+                    <input type="text" name="activiteId" class="hidden">
+                    <div>
+                        <label for="titre">Titre</label>
+                        <input type="text" name="titre" id="titre" placeholder=""
+                            class="w-full border border-black rounded-lg outline-0 px-2 text-white">
+                    </div>
+                    <div>
+                        <label for="theme">Theme</label>
+                        <select name="theme" id="theme" col-span-1
+                            class="w-full border border-black rounded-lg outline-0 px-2">
+                            <option value="" selected disabled>--choisir--</option>
+                            <option value="apprentissage">apprentissage</option>
+                            <option value="jeu">jeu</option>
+                            <option value="exercice">exercice</option>
+                            <option value="autre">autre</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="objectif">Objectifs</label>
+                        <input type="text" id="objectifs" placeholder="" name="objectifs"
+                            class="w-full border border-black rounded-lg outline-0 px-2 text-white">
+                    </div>
+                    <div>
+                        <label for="duree">Duree</label>
+                        <input type="text" id="duree" placeholder="" name="duree"
+                            class="w-full border border-black rounded-lg outline-0 px-2 text-white">
+                    </div>
+                    <div>
+                        <label for="description">Description</label>
+                        <textarea name="description" id="description"
+                            class="w-full border border-black rounded-lg outline-0 px-2 text-white"></textarea>
+                    </div>
+                    <button class="bg-red-700 text-white cursor-pointer py-1 px-3 rounded-lg mt-4"
+                        id="btn-update-activite">Modifier Activite</button>
+                    <button class="bg-black text-white cursor-pointer py-1 px-3 rounded-lg mt-4"
+                        id="cancel-update">Cancel</button>
+                </form>
+            </div>
 
             <header class="">
                 <h1 class="text-[30px] font-semibold">Lorem ipsum dolor sit amet.</h1>
@@ -112,36 +155,14 @@
             </div>
 
             <div id="container-activites" class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-5 gap-5">
-                <!-- <article class="bg-red-300 rounded-2xl py-2 px-4">
-                    <h3>Lorem, ipsum dolor.</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-                    <p>Objectife : Lorem ipsum dolor sit amet.</p>
-                    <p>Auteur : Sara El Amrani</p>
-                    <span>Duree : 10 min</span>
-                    <span>Theme : apprentissage</span>
-                </article>
-
-                <article class="bg-red-300 rounded-2xl py-2 px-4">
-                    <h3>Lorem, ipsum dolor.</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-                    <p>Objectife : Lorem ipsum dolor sit amet.</p>
-                    <p>Auteur : Sara El Amrani</p>
-                    <span>Duree : 10 min</span>
-                    <span>Theme : apprentissage</span>
-                </article>
-                <article class="bg-red-300 rounded-2xl py-2 px-4">
-                    <h3>Lorem, ipsum dolor.</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-                    <p>Objectife : Lorem ipsum dolor sit amet.</p>
-                    <p>Auteur : Sara El Amrani</p>
-                    <span>Duree : 10 min</span>
-                    <span>Theme : apprentissage</span>
-                </article> -->
+                <!--  -->
             </div>
 
 
         </section>
     </main>
+
+    <h2 id="title">Hello World</h2>
 
     <script type="module" src="./src/js/index.js"></script>
     <script src="
