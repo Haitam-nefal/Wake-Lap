@@ -5,7 +5,7 @@ import {
   deleteActivite,
   updateActivite,
 } from "./main.js";
-
+import Swal from "sweetalert2";
 // =====================================
 let activites = [];
 // =====================================
@@ -138,6 +138,10 @@ btnCreateActivite.addEventListener("click", async (e) => {
     });
     forms.reset();
     FnClosePopup();
+    Swal.fire({
+      title: "creer une activite avec succes",
+      icon: "success",
+    });
   } catch (err) {
     console.log("err from btn create  : ", err);
   } finally {
@@ -149,12 +153,24 @@ btnCreateActivite.addEventListener("click", async (e) => {
 const AddListenerToBtns = () => {
   document.querySelectorAll("#btns").forEach((btn) => {
     btn.addEventListener("click", async (e) => {
+      // DELETE =>
       if (e.target.dataset.desc === "btn-delete") {
-        console.log(`delete ${e.currentTarget.dataset.id}`);
-        if (confirm("are you sure ?")) {
-          await deleteActivite(e.currentTarget.dataset.id);
-          passDataToVariable();
-        }
+        const id = e.currentTarget.dataset.id;
+
+        const result = await Swal.fire({
+          title: "Êtes-vous sûr de vouloir supprimer cette activité ?",
+          icon: "question",
+          showDenyButton: true,
+          confirmButtonText: "ok",
+          denyButtonText: `cancel`,
+        });
+
+        if (!result.isConfirmed) return;
+
+        await deleteActivite(parseInt(id));
+        await Swal.fire({ title: "Saved!", icon: "success" });
+        await passDataToVariable();
+
         return;
       }
       if (e.target.dataset.desc === "btn-modifier") {
@@ -216,9 +232,4 @@ cancelUpdate.addEventListener("click", (e) => {
   document.body.classList = "overflow-y-auto";
 });
 
-const titleId = document.getElementById("title");
-const titleQuerySelector = document.querySelector("#title");
-
-console.log("get title with getElementById : ", titleId);
-console.log("get title with querySelectore : ", titleQuerySelector);
-``
+``;
