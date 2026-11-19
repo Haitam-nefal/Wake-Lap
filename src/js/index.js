@@ -5,6 +5,7 @@ import {
   deleteActivite,
   updateActivite,
 } from "./main.js";
+import { navbar } from "./navbar.js";
 import Swal from "sweetalert2";
 // =====================================
 let activites = [];
@@ -39,6 +40,7 @@ const AffichageActivites = (acts) => {
     // create Article => parent of all element :
     const article = document.createElement("article");
     article.classList = "bg-red-300 rounded-2xl py-2 px-4";
+    // article.setAttribute("")
 
     // H3 :
     const h3 = createH3("text-[20px] font-semibold", act.titre);
@@ -52,7 +54,7 @@ const AffichageActivites = (acts) => {
     const div1 = createDiv1(act.duree, act.theme);
 
     // CREATE DIVE2 =>
-    const div2 = createDiv2(act.is);
+    const div2 = createDiv2(act.id);
 
     article.append(h3, p1, p2, p3, div1, div2);
     containerActivites.appendChild(article);
@@ -237,6 +239,7 @@ const AddListenerToBtns = () => {
         const activiteModifier = activites.find(
           (act) => act.id == e.currentTarget.dataset.id,
         );
+        console.log(activiteModifier);
         RemplireFormulaire(activiteModifier);
         return;
       }
@@ -262,7 +265,6 @@ btnUpdateActivite.addEventListener("click", async (e) => {
 
   const { activiteId, titre, theme, objectifs, duree, description } =
     document.forms["update-participant"];
-  console.log(activiteId);
 
   const resulta = await updateActivite(activiteId.value, {
     titre: titre.value,
