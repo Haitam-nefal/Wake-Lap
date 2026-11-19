@@ -33,27 +33,80 @@ const passDataToVariable = async () => {
 
 // AFFICHAGE DE L'ACTIVITE:
 const AffichageActivites = (acts) => {
-  containerActivites.innerHTML = ``;
+  containerActivites.innerText = ``;
 
-  acts.forEach((ac) => {
-    containerActivites.innerHTML += `
-        <article class="bg-red-300 rounded-2xl py-2 px-4">
-            <h3 class="text-[20px] font-semibold">${ac.titre}</h3>
-            <p class="text-[17px] line-clamp-2 my-1">${ac.description}</p>
-            <p class="line-clamp-1 my-1">Objectife : ${ac.objectifs}</p>
-            <p>Auteur : ${ac.auteur}</p>
-            <div class="mt-4">
-                <span class="bg-amber-200 p-1 rounded-lg">Duree : ${ac.duree} min</span>
-                <span class="bg-amber-200 p-1 rounded-lg">Theme : ${ac.theme}</span>
-            </div>
-            <div id="btns" class="mt-3" data-id="${ac.id}">
-                <button data-desc="btn-delete" class="bg-red-600 cursor-pointer mt-3 py-1 px-4 rounded-md text-white">supprime</button>
-                <button data-desc="btn-modifier" class="bg-green-500 cursor-pointer mt-3 py-1 px-4 rounded-md text-white">Modifier</button>
-            </div>
-        </article>
-    `;
+  acts.forEach((act) => {
+    // create Article => parent of all element :
+    const article = document.createElement("article");
+    article.classList = "bg-red-300 rounded-2xl py-2 px-4";
+
+    // H3 :
+    const h3 = createH3("text-[20px] font-semibold", act.titre);
+
+    // ALL PARAGRAPHE => P1, P2, P2
+    const p1 = createP("text-[17px] line-clamp-2 my-1", act.description);
+    const p2 = createP("line-clamp-1 my-1", `Objectifs : ${act.objectifs}`);
+    const p3 = createP("", act.auteur);
+
+    // CREATE DIVE1 =>
+    const div1 = createDiv1(act.duree, act.theme);
+
+    // CREATE DIVE2 =>
+    const div2 = createDiv2(act.is);
+
+    article.append(h3, p1, p2, p3, div1, div2);
+    containerActivites.appendChild(article);
   });
+
   AddListenerToBtns();
+};
+
+const createDiv1 = (duree, theme) => {
+  const div1 = document.createElement("div");
+  div1.classList = "mt-4 space-x-2";
+  const span1 = document.createElement("span");
+  span1.classList = "bg-amber-200 p-1 rounded-lg";
+  span1.innerText = `Duree : ${duree} min`;
+  const span2 = document.createElement("span");
+  span2.classList = "bg-amber-200 p-1 rounded-lg";
+  span2.innerText = `Theme : ${theme}`;
+
+  div1.append(span1, span2);
+  return div1;
+};
+
+const createDiv2 = (idActivite) => {
+  const div2 = document.createElement("div");
+  div2.classList = "mt-3 space-x-2";
+  div2.id = "btns";
+  div2.setAttribute("data-id", idActivite);
+  const btn1 = document.createElement("button");
+  btn1.classList =
+    "bg-red-600 cursor-pointer mt-3 py-1 px-4 rounded-md text-white";
+  btn1.innerText = `supprime`;
+  btn1.setAttribute("data-desc", "btn-delete");
+  const btn2 = document.createElement("button");
+  btn2.classList =
+    "bg-green-500 cursor-pointer mt-3 py-1 px-4 rounded-md text-white";
+  btn2.innerText = `Modifier`;
+  btn2.setAttribute("data-desc", "btn-modifier");
+
+  div2.append(btn1, btn2);
+  return div2;
+};
+
+const createH3 = (classL, content) => {
+  const h3 = document.createElement("h3");
+  h3.classList = classL;
+  h3.innerText = content;
+  return h3;
+};
+
+const createP = (classL, content) => {
+  const p = document.createElement("p");
+  p.classList = classL;
+  p.innerText = content;
+  return p;
 };
 
 // CHECK THE NAME
