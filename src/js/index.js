@@ -5,7 +5,7 @@ import {
   deleteActivite,
   updateActivite,
 } from "./main.js";
-import { navbar } from "./navbar.js";
+import navbar from "./navbar.js";
 import Swal from "sweetalert2";
 // =====================================
 let activites = [];
@@ -40,7 +40,6 @@ const AffichageActivites = (acts) => {
     // create Article => parent of all element :
     const article = document.createElement("article");
     article.classList = "bg-red-300 rounded-2xl py-2 px-4";
-    // article.setAttribute("")
 
     // H3 :
     const h3 = createH3("text-[20px] font-semibold", act.titre);
@@ -59,8 +58,6 @@ const AffichageActivites = (acts) => {
     article.append(h3, p1, p2, p3, div1, div2);
     containerActivites.appendChild(article);
   });
-
-  AddListenerToBtns();
 };
 
 const createDiv1 = (duree, theme) => {
@@ -81,17 +78,18 @@ const createDiv2 = (idActivite) => {
   const div2 = document.createElement("div");
   div2.classList = "mt-3 space-x-2";
   div2.id = "btns";
-  div2.setAttribute("data-id", idActivite);
   const btn1 = document.createElement("button");
   btn1.classList =
     "bg-red-600 cursor-pointer mt-3 py-1 px-4 rounded-md text-white";
   btn1.innerText = `supprime`;
   btn1.setAttribute("data-desc", "btn-delete");
+  btn1.setAttribute("data-id", idActivite);
   const btn2 = document.createElement("button");
   btn2.classList =
     "bg-green-500 cursor-pointer mt-3 py-1 px-4 rounded-md text-white";
   btn2.innerText = `Modifier`;
   btn2.setAttribute("data-desc", "btn-modifier");
+  btn2.setAttribute("data-id", idActivite);
 
   div2.append(btn1, btn2);
   return div2;
@@ -165,17 +163,8 @@ filtrageTheme.addEventListener("change", async (e) => {
 // OPEN POPUP =>
 openPopup.addEventListener("click", () => {
   formCreateActivite.classList.remove("hidden");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-  document.body.classList = "overflow-y-hidden";
+  ScrollToTopBodyOverflow();
 });
-// EVENET To CLOSE POPUP =>
-closePopup.addEventListener("click", () => FnClosePopup());
-
-// FUNCTION TO CLOSE POPUP =>
-const FnClosePopup = () => {
-  formCreateActivite.classList.add("hidden");
-  document.body.classList = "overflow-y-auto";
-};
 
 // CREATE ACTIVITE :
 btnCreateActivite.addEventListener("click", async (e) => {
@@ -204,48 +193,39 @@ btnCreateActivite.addEventListener("click", async (e) => {
   }
 });
 
-// ADD LISTENER TO BUTTONS =>
-const AddListenerToBtns = () => {
-  document.querySelectorAll("#btns").forEach((btn) => {
-    btn.addEventListener("click", async (e) => {
-      // DELETE =>
-      if (e.target.dataset.desc === "btn-delete") {
-        const id = e.currentTarget.dataset.id;
+// ADD LISTENER TO CONTAINER OF ARTICLES : Evenet Delegation =>
+containerActivites.addEventListener("click", async (e) => {
+  // DELETE =>
+  if (e.target.dataset.desc === "btn-delete") {
+    const id = e.target.dataset.id;
 
-        const result = await Swal.fire({
-          title: "Êtes-vous sûr de vouloir supprimer cette activité ?",
-          icon: "question",
-          showDenyButton: true,
-          confirmButtonText: "ok",
-          denyButtonText: `cancel`,
-        });
-
-        if (!result.isConfirmed) return;
-
-        await deleteActivite(parseInt(id));
-        await Swal.fire({ title: "Saved!", icon: "success" });
-        await passDataToVariable();
-
-        return;
-      }
-      if (e.target.dataset.desc === "btn-modifier") {
-        formUpdateActivite.classList.remove("hidden");
-        formUpdateActivite.setAttribute(
-          "data-activite-id",
-          e.currentTarget.dataset.id,
-        );
-        document.body.classList.add("overflow-y-hidden");
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        const activiteModifier = activites.find(
-          (act) => act.id == e.currentTarget.dataset.id,
-        );
-        console.log(activiteModifier);
-        RemplireFormulaire(activiteModifier);
-        return;
-      }
+    const result = await Swal.fire({
+      title: "Êtes-vous sûr de vouloir supprimer cette activité ?",
+      icon: "question",
+      showDenyButton: true,
+      confirmButtonText: "ok",
+      denyButtonText: `cancel`,
     });
-  });
-};
+
+    if (!result.isConfirmed) return;
+
+    await deleteActivite(parseInt(id));
+    await Swal.fire({ title: "Saved!", icon: "success" });
+    await passDataToVariable();
+
+    return;
+  }
+  if (e.target.dataset.desc === "btn-modifier") {
+    formUpdateActivite.classList.remove("hidden");
+    formUpdateActivite.setAttribute("data-activite-id", e.target.dataset.id);
+    ScrollToTopBodyOverflow();
+    const activiteModifier = activites.find(
+      (act) => act.id == e.target.dataset.id,
+    );
+    RemplireFormulaire(activiteModifier);
+    return;
+  }
+});
 
 passDataToVariable();
 
@@ -283,8 +263,19 @@ btnUpdateActivite.addEventListener("click", async (e) => {
 // CLOSE UPDATE FORMULAIRE =>
 cancelUpdate.addEventListener("click", (e) => {
   e.preventDefault();
-  formUpdateActivite.classList.add("hidden");
-  document.body.classList = "overflow-y-auto";
+  Close(formUpdateActivite);
 });
 
-``;
+// EVENET To CLOSE POPUP =>
+closePopup.addEventListener("click", () => Close(formCreateActivite));
+
+const Close = (form) => {
+  form.classList.add("hidden");
+  document.body.classList = "overflow-y-auto";
+};
+
+// THIS FUNCTION IS TAKE THE SCREEN TO TOP AND ALSO ... THE SCROLL INTO THE SCREEN :
+const ScrollToTopBodyOverflow = () => {
+  document.body.classList.add("overflow-y-hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};

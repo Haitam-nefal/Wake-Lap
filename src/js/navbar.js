@@ -1,4 +1,4 @@
-export const navbar = document.getElementById("navbar")
+const navbar = document.getElementById("navbar");
 
 navbar.innerHTML = `
     <nav class="flex flex-col md:flex-row justify-between items-center  max-w-6xl mx-auto min-h-20 py-2">
@@ -9,4 +9,5 @@ navbar.innerHTML = `
             <li><a href="#">Home</a></li>
         </ul>
     </nav>
-`
+`;
+export default navbar;
