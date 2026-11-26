@@ -14,11 +14,10 @@ export const filterActiviteParTheme = async (theme) => {
 
 export const createActivite = async (data) => {
   try {
-    console.log(data);
-    const res = await api.post(`${URI}`, data);
-    console.log(res);
+    return await api.post(`${URI}`, data);
   } catch (err) {
     console.log(err.response);
+    // throw new Error(err.response)
   }
 };
 

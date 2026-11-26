@@ -38,13 +38,15 @@
 
             <!-- POPUP POUR LA CREATION DE L'ACTIVITE -->
             <div id="form-create-activite"
-                class="bg-gray-500 absolute left-[50%] top-[50%] translate-[-50%] py-5 px-7 shadow-lg rounded-md hidden">
+                class="bg-gray-500 absolute left-[50%] top-[50%] translate-[-50%] py-3 px-7 shadow-lg rounded-md hidden z-90">
                 <form name="create-participant">
-                    <i class="fa-solid fa-xmark" id="close-popup"></i>
+                    <button class="cursor-pointer" type="button"><i class="fa-solid fa-xmark"
+                            id="close-popup"></i></button>
                     <div>
                         <label for="titre">Titre</label>
                         <input type="text" name="titre" id="titre" placeholder=""
                             class="w-full border border-black rounded-lg outline-0 px-2 text-white">
+                        <span class="error text-red-800"></span>
                     </div>
                     <div>
                         <label for="theme">Theme</label>
@@ -56,21 +58,25 @@
                             <option value="exercice">exercice</option>
                             <option value="autre">autre</option>
                         </select>
+                        <span class="error text-red-800"></span>
                     </div>
                     <div>
                         <label for="objectif">Objectifs</label>
                         <input type="text" id="objectifs" placeholder="" name="objectifs"
                             class="w-full border border-black rounded-lg outline-0 px-2 text-white">
+                        <span class="error text-red-800"></span>
                     </div>
                     <div>
                         <label for="duree">Duree</label>
                         <input type="text" id="duree" placeholder="" name="duree"
                             class="w-full border border-black rounded-lg outline-0 px-2 text-white">
+                        <span class="error text-red-800"></span>
                     </div>
                     <div>
                         <label for="description">Description</label>
                         <textarea name="description" id="description"
                             class="w-full border border-black rounded-lg outline-0 px-2 text-white"></textarea>
+                        <span class="error text-red-800"></span>
                     </div>
                     <button class="bg-red-700 text-white cursor-pointer py-1 px-3 rounded-lg mt-4 w-full"
                         id="btn-create-activite">Creer Activite</button>

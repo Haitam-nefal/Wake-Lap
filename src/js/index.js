@@ -5,6 +5,11 @@ import {
   deleteActivite,
   updateActivite,
 } from "./main.js";
+// ================================
+// functions for validation form
+import { validation } from "./ValidationFormulair.js";
+// ====================================
+
 import navbar from "./navbar.js";
 import Swal from "sweetalert2";
 // =====================================
@@ -131,12 +136,12 @@ btnSendNom.addEventListener("click", () => {
 
 // FUNCTION VALIDATION =>
 const validationInput = () => {
-  const val = nomComplet.value;
-  if (val === "") {
+  const nomValue = nomComplet.value;
+  if (nomValue === "") {
     nomComplet.nextElementSibling.innerText = "Nom et un champ obligatiore";
     return false;
   }
-  if (val.length <= 5) {
+  if (nomValue.length <= 5) {
     nomComplet.nextElementSibling.innerText =
       "le champ doit remplire par un nom complet minimum 5 caractere [A-Z]";
     return false;
@@ -172,16 +177,39 @@ btnCreateActivite.addEventListener("click", async (e) => {
   try {
     const forms = document.forms["create-participant"];
     const { titre, objectifs, duree, description, theme } = forms;
-    await createActivite({
+
+    // START VALIDATION =>
+    const ers = validation(titre, objectifs, duree, description, theme);
+    const fields = {
+      titre,
+      objectifs,
+      duree,
+      description,
+      theme,
+    };
+    
+    // CLEAR ERRORS =>
+    Object.values(fields).forEach((field) => {
+      field.nextElementSibling.innerText = "";
+    });
+
+    if (Object.keys(ers).length > 0) {
+      Object.entries(ers).forEach(([key, value]) => {
+        fields[key].nextElementSibling.innerText = value.message;
+      });
+      return;
+    }
+
+    const res = await createActivite({
       titre: titre.value,
       objectifs: objectifs.value,
-      duree: parseInt(duree.value),
+      duree: Number(duree.value),
       description: description.value,
       theme: theme.value,
       auteur: localStorage.getItem("nom"),
     });
     forms.reset();
-    FnClosePopup();
+    Close(formCreateActivite);
     Swal.fire({
       title: "creer une activite avec succes",
       icon: "success",
