@@ -152,18 +152,22 @@ const validationInput = () => {
 
 //// : Filtrage & Searche :
 //// SEARCH INPUT =>
-searchInput.addEventListener("input", (e) => {
-  const filtredActivites = activites.filter((act) =>
-    act.titre.toLowerCase().includes(e.target.value.toLowerCase()),
-  );
-  AffichageActivites(filtredActivites);
-});
+const filterActivite = () => {
+  const searchValue = searchInput.value.toLowerCase();
+  const themeValue = filtrageTheme.value;
+
+  const filtred = activites.filter((act) => {
+    const matchTitre = act.titre.toLowerCase().includes(searchValue);
+    const matchTheme = themeValue === "all" || act.theme === themeValue;
+    return matchTheme && matchTitre;
+  });
+
+  AffichageActivites(filtred);
+};
+
+searchInput.addEventListener("input", filterActivite);
 //// FILTARGE PAR THEME =>
-filtrageTheme.addEventListener("change", async (e) => {
-  console.log(e.target.value);
-  const filtredActivites = await filterActiviteParTheme(e.target.value);
-  AffichageActivites(filtredActivites);
-});
+filtrageTheme.addEventListener("change", filterActivite);
 
 // OPEN POPUP =>
 openPopup.addEventListener("click", () => {
@@ -187,7 +191,7 @@ btnCreateActivite.addEventListener("click", async (e) => {
       description,
       theme,
     };
-    
+
     // CLEAR ERRORS =>
     Object.values(fields).forEach((field) => {
       field.nextElementSibling.innerText = "";
@@ -200,7 +204,7 @@ btnCreateActivite.addEventListener("click", async (e) => {
       return;
     }
 
-    const res = await createActivite({
+    await createActivite({
       titre: titre.value,
       objectifs: objectifs.value,
       duree: Number(duree.value),

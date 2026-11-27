@@ -17,7 +17,6 @@ export const createActivite = async (data) => {
     return await api.post(`${URI}`, data);
   } catch (err) {
     console.log(err.response);
-    // throw new Error(err.response)
   }
 };
 
